@@ -108,6 +108,6 @@ if($media >= 7){
 }else{
     echo "vc foi reprovado com uma media de " . $media;
 }*/
-
+hjhrjrkkr
 
  ?>
