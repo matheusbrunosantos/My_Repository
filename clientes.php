@@ -8,7 +8,7 @@ include_once('layout/sidebar.php');
   <div class="card">
     <div class="card-body">
 
-      <a href="form_cliente.html" class="btn btn-primary" style="float: right">
+      <a href="form_cliente.php" class="btn btn-primary" style="float: right">
         <i class="fas fa-user"></i> Novo cliente
       </a>
       <a href="javascript:history.back(-1)" class="btn btn-secondary voltar">
