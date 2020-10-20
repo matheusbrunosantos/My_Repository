@@ -2,6 +2,7 @@
 include_once('layout/header.php');
 include_once('layout/menu.php');
 include_once('layout/sidebar.php');
+include_once('layout/bd/equipamentos.php');
 ?>
 <div class="col">
   <h2>Equipamentos</h2>
@@ -23,11 +24,14 @@ include_once('layout/sidebar.php');
             <th>Código</th>
             <th class="acao">Ação</th>
           </tr>
+
+          <?php foreach ($equipamentos as $key => $equipamentos): ?>
           <tr>
-            <td>Nome</td>
-            <td>Categoria</td>
-            <td>Data de Compra</td>
-            <td>Código</td>
+            <td><?php echo $key + 1; ?></td>
+            <td><?= $equipamentos['nome'] ?></td>
+            <td><?= $equipamentos['categoria'] ?></td>
+            <td><?= $equipamentos['data_compra'] ?></td>
+            <td><?= $equipamentos['codigo'] ?></td>
             <td>
               <a href="#" class="btn btn-success">
                 <i class="fas fa-eye"></i>
@@ -40,57 +44,8 @@ include_once('layout/sidebar.php');
               </a>
             </td>
           </tr>
-          <tr>
-            <td>Nome</td>
-            <td>Categoria</td>
-            <td>Data de Compra</td>
-            <td>Código</td>
-            <td>
-              <a href="#" class="btn btn-success">
-                <i class="fas fa-eye"></i>
-              </a>
-              <a href="#" class="btn btn-warning">
-                <i class="fas fa-edit"></i>
-              </a>
-              <a href="#" class="btn btn-danger">
-                <i class="fas fa-trash"></i>
-              </a>
-            </td>
-          </tr>
-          <tr>
-            <td>Nome</td>
-            <td>Categoria</td>
-            <td>Data de Compra</td>
-            <td>Código</td>
-            <td>
-              <a href="#" class="btn btn-success">
-                <i class="fas fa-eye"></i>
-              </a>
-              <a href="#" class="btn btn-warning">
-                <i class="fas fa-edit"></i>
-              </a>
-              <a href="#" class="btn btn-danger">
-                <i class="fas fa-trash"></i>
-              </a>
-            </td>
-          </tr>
-          <tr>
-            <td>Nome</td>
-            <td>Categoria</td>
-            <td>Data de Compra</td>
-            <td>Código</td>
-            <td>
-              <a href="#" class="btn btn-success">
-                <i class="fas fa-eye"></i>
-              </a>
-              <a href="#" class="btn btn-warning">
-                <i class="fas fa-edit"></i>
-              </a>
-              <a href="#" class="btn btn-danger">
-                <i class="fas fa-trash"></i>
-              </a>
-            </td>
-          </tr>
+        <?php endforeach; ?>
+
       </table>
        <nav aria-label="Navegação de página exemplo" class="pagination">
         <ul class="pagination">
