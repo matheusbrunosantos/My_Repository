@@ -2,7 +2,7 @@
 include_once('layout/header.php');
 include_once('layout/menu.php');
 include_once('layout/sidebar.php');
-include_once('layout/bd/equipamentos.php');
+include_once('bd/equipamentos.php');
 ?>
 <div class="col">
   <h2>Equipamentos</h2>
@@ -27,7 +27,6 @@ include_once('layout/bd/equipamentos.php');
 
           <?php foreach ($equipamentos as $key => $equipamentos): ?>
           <tr>
-            <td><?php echo $key + 1; ?></td>
             <td><?= $equipamentos['nome'] ?></td>
             <td><?= $equipamentos['categoria'] ?></td>
             <td><?= $equipamentos['data_compra'] ?></td>
