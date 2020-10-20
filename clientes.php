@@ -2,14 +2,14 @@
 include_once('layout/header.php');
 include_once('layout/menu.php');
 include_once('layout/sidebar.php');
-include_once('bd/clientes.php');
+include_once('bd/clientes.php');//lista de clientes em array
  ?>
 <div class="col">
   <h2>Gestão de clientes</h2>
   <div class="card">
     <div class="card-body">
 
-      <a href="form_cliente.html" class="btn btn-primary" style="float: right">
+      <a href="form_cliente.php" class="btn btn-primary" style="float: right">
         <i class="fas fa-user"></i> Novo cliente
       </a>
       <a href="javascript:history.back(-1)" class="btn btn-secondary voltar">
@@ -27,18 +27,19 @@ include_once('bd/clientes.php');
       <th>Convênio</th>
       <th>Ações</th>
     </tr>
-    <?php foreach($clientes as $key => $cliente) : ?>
+    <!-- linha para cada elemento -->
+    <?php foreach($clientes as $chave => $cliente): ?>
     <tr>
-      <td><?php echo $key + 1; ?></td>
-      <td><?php echo $cliente['nome'] ?></td>
-      <td><?php echo $cliente['cpf'] ?></td>
-      <td><?php echo $cliente['telefone'] ?></td>
+      <td><?php echo $chave + 1; ?></td>
+      <td><?= $cliente['nome'] ?></td>
+      <td><?= $cliente['cpf'] ?></td>
+      <td><?= $cliente['telefone']  ?></td>
       <td>
-        <a href="mailto:<?php echo $cliente['email'] ?>">
-          <?php echo $cliente['email'] ?>
+        <a href="mailto:<?= $cliente['email']  ?>">
+          <?= $cliente['email']  ?>
         </a>
       </td>
-      <td><?php echo $cliente['convenio'] ?></td>
+      <td><?= $cliente['convenio']  ?></td>
       <td>
         <a href="#" class="btn btn-secondary">
           <i class="fas fa-eye"></i>
@@ -52,6 +53,8 @@ include_once('bd/clientes.php');
       </td>
     </tr>
     <?php endforeach; ?>
+    <!-- /linha para cada elemento -->
+
   </table>
 
   <nav aria-label="Navegação de página exemplo">
