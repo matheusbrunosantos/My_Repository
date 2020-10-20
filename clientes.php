@@ -2,13 +2,14 @@
 include_once('layout/header.php');
 include_once('layout/menu.php');
 include_once('layout/sidebar.php');
+include_once('bd/clientes.php');
  ?>
 <div class="col">
   <h2>Gestão de clientes</h2>
   <div class="card">
     <div class="card-body">
 
-      <a href="form_cliente.php" class="btn btn-primary" style="float: right">
+      <a href="form_cliente.html" class="btn btn-primary" style="float: right">
         <i class="fas fa-user"></i> Novo cliente
       </a>
       <a href="javascript:history.back(-1)" class="btn btn-secondary voltar">
@@ -26,14 +27,18 @@ include_once('layout/sidebar.php');
       <th>Convênio</th>
       <th>Ações</th>
     </tr>
-    <?php for($i = 1; $i <= 40; $i++) { ?>
+    <?php foreach($clientes as $key => $cliente) : ?>
     <tr>
-      <td><?php echo $i; ?></td>
-      <td>Nome</td>
-      <td>CPF</td>
-      <td>Telefone</td>
-      <td>E-mail</td>
-      <td>Convênio</td>
+      <td><?php echo $key + 1; ?></td>
+      <td><?php echo $cliente['nome'] ?></td>
+      <td><?php echo $cliente['cpf'] ?></td>
+      <td><?php echo $cliente['telefone'] ?></td>
+      <td>
+        <a href="mailto:<?php echo $cliente['email'] ?>">
+          <?php echo $cliente['email'] ?>
+        </a>
+      </td>
+      <td><?php echo $cliente['convenio'] ?></td>
       <td>
         <a href="#" class="btn btn-secondary">
           <i class="fas fa-eye"></i>
@@ -46,7 +51,7 @@ include_once('layout/sidebar.php');
         </a>
       </td>
     </tr>
-    <?php } ?>
+    <?php endforeach; ?>
   </table>
 
   <nav aria-label="Navegação de página exemplo">
