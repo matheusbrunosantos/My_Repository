@@ -10,16 +10,21 @@
     <?php 
     echo '<pre>';
       foreach ($itens_menu as $menu) {
-        echo '<i class="fas fa-' . $menu['icon'] . '"></i>  ';
+        echo '<i class="fas fa-' . $menu['icon'] . '"></i> ';
         echo $menu['item'];
         echo ': ';
         echo '<br>';
           
-         //colocar aqui os subitens
-        
+        foreach($menu['opcoes'] as $subitem) {
+            echo ' --- ';
+            echo '<a href="' . $subitem['link'] . '" title="">' . $subitem['nome'] . '</a>';
+            echo '<br>';
+        }
+
         echo '<br>';
       }
      ?>
+
   </div>
         
 <?php include_once('layout/footer.php'); ?>
