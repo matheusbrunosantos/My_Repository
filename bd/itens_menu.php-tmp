@@ -1,0 +1,51 @@
+
+Deprecated: The each() function is deprecated. This message will be suppressed on further calls in C:\Users\trazo\AppData\Roaming\Sublime Text 3\Packages\PHPTools\php.tools\codeFormatter.php on line 54
+<?php
+$menu = [
+	[
+		'item'   => 'Cadastro',
+		'opcoes' => [
+			'Clientes',
+			'Fornecedores',
+			'Colaboradores',
+			'Equipamentos',
+			'Produtos',
+			'Serviços',
+			'Categorias'
+		],
+	],
+	[
+		'item'   => 'Documentos',
+		'opcoes' => [
+			'Lista mestra',
+			'Documentos externos',
+			'Procedimentos',
+			'Instruções de trabalho',
+			'Obsoletos',
+			'Em revisão/Elaboração',
+			'Manuais',
+			'Anexos'
+		]
+	],
+	[
+		'item'   => 'Registros',
+		'opcoes' => [
+			'Organização',
+			'Pessoal',
+			'Equipamentos',
+			'Compras',
+			'Análise crítica de contratos',
+			'Reclamações',
+			'Trabalho não conforme',
+			'Controle de registros',
+			'Gestão de riscos',
+			'Melhorias',
+			'Ações corretivas',
+			'Auditorias',
+			'Análise crítica pela gerencia',
+			'Plano de ação'
+		]
+	],
+];
+
+?>
