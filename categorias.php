@@ -1,8 +1,19 @@
 <?php 
+$host = 'localhost';
+$usuario = 'root';
+$senha = 'root';
+$bd = 'laborus';
+
+$conexao = mysqli_connect($host, $usuario, $senha, $bd);
+
+exit;
 include_once('layout/header.php');
 include_once('layout/menu.php');
 include_once('layout/sidebar.php');
 include_once('bd/categorias.php');
+
+
+
 ?>
 <div class="col">
   <h2 class="titulo">Categorias</h2>
