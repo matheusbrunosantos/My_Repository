@@ -46,7 +46,8 @@ include_once('gerencia_servicos.php');
         <th>Categoria</th>
         <th>Ações</th>
       </tr>
-      <?php foreach($servicos as $servico): ?>
+      <?php foreach($servicos as $servico): 
+        ?>
       <tr>
         <td><?= $servico['codigo'] ?></td>
         <td><?= $servico['nome'] ?></td>
@@ -68,7 +69,8 @@ include_once('gerencia_servicos.php');
     <?php endforeach; ?>
     </table>
 
-    <nav aria-label="Navegação de página exemplo">
+    <nav ar
+    ia-label="Navegação de página exemplo">
       <ul class="pagination">
 
         <li class="page-item"><a class="page-link" href="#">Anterior</a></li>
