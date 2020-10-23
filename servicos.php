@@ -61,7 +61,7 @@ include_once('gerencia_servicos.php');
           <a href="#" class="btn btn-warning">
             <i class="fas fa-edit"></i>
           </a>
-           <a href="gerencia_servicos.php?id=servicos<?php echo $servicos['servicos']; ?>" class="btn btn-danger" onclick="return confirm('Deseja realmente excluir?')">
+           <a href="gerencia_servicos.php?id=<?php echo $servico['id']; ?>" class="btn btn-danger" onclick="return confirm('Deseja realmente excluir?')">
           <i class="fas fa-trash"></i>
           </a>
         </td>
