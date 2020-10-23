@@ -1,13 +1,27 @@
 <?php 
+  include_once('bd/conexao.php');
   include_once('layout/header.php');
   include_once('layout/menu.php');
   include_once('layout/sidebar.php');
-  include_once('bd/fornecedores.php');
+
+  $sql = "SELECT * FROM fornecedores";
+  $qr = mysqli_query($conexao, $sql);
+  $fornecedores = mysqli_fetch_all($qr, MYSQLI_ASSOC);
+ 
+
+
 ?>
          <div class="col">
           <h2 class="titulo">Gestão de fornecedores</h2>
           <span class="badge badge-info totais">Total: <?php echo count($fornecedores); ?></span>
           <div class="clear"></div>
+
+          <?php if(isset($_GET['mensagem'])): ?>
+          <div class="alert alert-<?php echo $_GET['alert'] ?? 'success'; ?>" id="alert-mensagem">
+         <?php echo $_GET['mensagem']; ?>
+         </div>
+          <?php endif; ?>
+
           <div class="card">
             <div class="card-body">
                <a href="form_fornecedores.php" class="btn btn-primary" style="float: right">
@@ -29,10 +43,11 @@
             </tr>
             <?php 
               $i = 0;
-              while($i < count($fornecedores)): 
+              while($i < count($fornecedores)):
+            
             ?>
             <tr>
-              <td><?php echo $fornecedores[$i]['nome_fantasia'] ?></td>
+              <td><?php echo $fornecedores[$i]['razao_social'] ?></td>
               <td><?php echo $fornecedores[$i]['cnpj'] ?></td>
               <td><?php echo $fornecedores[$i]['telefone'] ?></td>
               <td>
@@ -40,7 +55,10 @@
                   <?php echo $fornecedores[$i]['email'] ?>
                 </a>
               </td>
-              <td><?php echo $fornecedores[$i]['cidade'] ?></td>
+              <td><?php echo $fornecedores[$i]['cidade'] 
+             
+              ?></td>
+
               <td>
                 <a href="#" class="btn btn-secondary" data-toggle="modal" data-target="#modalVerCliente">
                   <i class="fas fa-eye"></i>
@@ -48,8 +66,8 @@
                 <a href="#" class="btn btn-success">
                   <i class="fas fa-edit"></i>
                 </a>
-                <a href="#" class="btn btn-danger">
-                  <i class="fas fa-trash" onclick="confirm('Deseja realmente deletar?')"></i>
+                <a href="gerencia_fornecedores.php?id=<?php echo $fornecedores[$i]['id']; ?>" class="btn btn-danger">
+                  <i class="fas fa-trash" onclick="return confirm('Deseja realmente excluir?')"></i>
                 </a>
               </td>
             </tr>

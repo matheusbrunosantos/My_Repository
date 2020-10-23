@@ -1,7 +1,7 @@
 <?php
-$host = 'localhost:3305';
+$host = 'localhost';
 $usuario = 'root';
-$senha = 'metanoia1';
+$senha = 'root';
 $bd = 'laborus';
 
 //Iniciando a conexão com o banco de dados MySQL/MariaDB

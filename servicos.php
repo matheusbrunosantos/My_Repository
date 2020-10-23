@@ -13,7 +13,6 @@ $servicos = mysqli_fetch_all($qr, MYSQLI_ASSOC);
 include_once('layout/header.php');
 include_once('layout/menu.php');
 include_once('layout/sidebar.php');
-include_once('gerencia_servicos.php');
 ?>
 <div class="col">
 <h2 class="titulo">Serviços</h2>
