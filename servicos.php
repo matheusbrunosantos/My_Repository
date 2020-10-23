@@ -1,13 +1,29 @@
 <?php 
+include_once('bd/conexao.php');
+
+//Monta a consulta a ser executada
+$sql = "SELECT * FROM servicos";
+
+//Execução da consulta ao banco de dados
+$qr = mysqli_query($conexao, $sql);
+
+//Armazenando o resultado em uma variável
+$servicos = mysqli_fetch_all($qr, MYSQLI_ASSOC);
+
 include_once('layout/header.php');
 include_once('layout/menu.php');
 include_once('layout/sidebar.php');
-include_once('bd/servicos.php');
- ?>
+include_once('gerencia_servicos.php');
+?>
 <div class="col">
 <h2 class="titulo">Serviços</h2>
 <span class="badge badge-info totais">Total: <?php echo count($servicos); ?></span>
 <div class="clear"></div>
+<?php if(isset($_GET['mensagem'])): ?>
+    <div class="alert alert-<?php echo $_GET['alert'] ?? 'success'; ?>" id="alert-mensagem">
+      <?php echo $_GET['mensagem']; ?>
+    </div>
+  <?php endif; ?>
     <div class="card">
       <div class="card-body">
 
@@ -36,7 +52,7 @@ include_once('bd/servicos.php');
         <td><?= $servico['nome'] ?></td>
         <td><?= $servico['descricao'] ?></td>
         <td><?= number_format($servico['preco'],2,',','.') ?></td>
-        <td><?= $servico['categoria'] ?></td>
+        <td><?= $servico['categoria_id'] ?></td>
         <td>
           <a href="#" class="btn btn-secondary">
             <i class="fas fa-eye"></i>
@@ -44,8 +60,8 @@ include_once('bd/servicos.php');
           <a href="#" class="btn btn-warning">
             <i class="fas fa-edit"></i>
           </a>
-          <a href="#" class="btn btn-danger">
-            <i class="fas fa-trash"></i>
+           <a href="gerencia_servicos.php?id=servicos<?php echo $servicos['servicos']; ?>" class="btn btn-danger" onclick="return confirm('Deseja realmente excluir?')">
+          <i class="fas fa-trash"></i>
           </a>
         </td>
       </tr>
