@@ -17,7 +17,13 @@
               'margin-left' : $('.content').css('margin-left') == '230px' ? '0px' : '230px'
           }, 300);
       });
-     
+
+      <?php if(isset($_GET['mensagem'])): ?>
+        setTimeout(function(){
+          $('#alert-mensagem').fadeOut();
+          window.location.href =  window.location.href.split("?")[0];
+        }, 5000);
+     <?php endif; ?>
     </script>
   </body>
 </html>

@@ -1,16 +1,19 @@
 <?php 
-$host = 'localhost';
-$usuario = 'root';
-$senha = 'root';
-$bd = 'laborus';
+include_once('bd/conexao.php');
 
-$conexao = mysqli_connect($host, $usuario, $senha, $bd);
+//Monta a consulta a ser executada
+$sql = "SELECT * FROM categoria";
 
-exit;
+//Execução da consulta ao banco de dados
+$qr = mysqli_query($conexao, $sql);
+
+//Armazenando o resultado em uma variável
+$categorias = mysqli_fetch_all($qr, MYSQLI_ASSOC);
+
 include_once('layout/header.php');
 include_once('layout/menu.php');
 include_once('layout/sidebar.php');
-include_once('bd/categorias.php');
+/*include_once('bd/categorias.php');*/
 
 
 
@@ -19,6 +22,13 @@ include_once('bd/categorias.php');
   <h2 class="titulo">Categorias</h2>
   <span class="badge badge-info totais">Total: <?php echo count($categorias); ?></span>
   <div class="clear"></div>
+
+  <?php if(isset($_GET['mensagem'])): ?>
+    <div class="alert alert-<?php echo $_GET['alert'] ?? 'success'; ?>" id="alert-mensagem">
+      <?php echo $_GET['mensagem']; ?>
+    </div>
+  <?php endif; ?>
+
   <div class="card">
     <div class="card-body">
       <a href="form_categorias.php" class="btn btn-primary" style="float: right">
@@ -36,7 +46,7 @@ include_once('bd/categorias.php');
       </tr>
       <?php foreach($categorias as $chave => $categoria): ?>
     <tr>
-      <td><?= $categoria['nome'] ?></td>
+      <td><?= $categoria['categoria'] ?></td>
     
       <td>
         <a href="#" class="btn btn-secondary">
@@ -45,7 +55,7 @@ include_once('bd/categorias.php');
         <a href="#" class="btn btn-warning">
           <i class="fas fa-edit"></i>
         </a>
-        <a href="#" class="btn btn-danger">
+        <a href="gerencia_categorias.php?id=<?php echo $categoria['id']; ?>" class="btn btn-danger" onclick="return confirm('Deseja realmente excluir?')">
           <i class="fas fa-trash"></i>
         </a>
       </td>
