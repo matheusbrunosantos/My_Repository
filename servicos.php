@@ -19,11 +19,6 @@ include_once('layout/sidebar.php');
 <h2 class="titulo">Serviços</h2>
 <span class="badge badge-info totais">Total: <?php echo count($servicos); ?></span>
 <div class="clear"></div>
-<?php if(isset($_GET['mensagem'])): ?>
-    <div class="alert alert-<?php echo $_GET['alert'] ?? 'success'; ?>" id="alert-mensagem">
-      <?php echo $_GET['mensagem']; ?>
-    </div>
-  <?php endif; ?>
   <?php include_once('layout/mensagens.php'); ?>
 
     <div class="card">

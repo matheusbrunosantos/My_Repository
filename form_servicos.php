@@ -51,13 +51,13 @@ include_once('layout/sidebar.php');
              <div class="col-md-6 col-sm-12">
                <div class="form-group">
                  <label for="usuario_id">Usuário:</label>
-              <input type="text" name="usuario_id" value="1" placeholder="" readonly="">   
+              <input type="text" name="usuario_id" value="1" placeholder="" readonly="" class="form-control">   
            </div>
          </div>
          <div class="col-md-6 col-sm-12">
                <div class="form-group">
                  <label for="categoria_id">Categoria:</label>
-               <input type="text" name="categoria_id" value="1" placeholder="" readonly="">
+               <input type="text" name="categoria_id" value="1" placeholder="" readonly="" class="form-control">
                </div>
                </div>  
            <div class="row">
