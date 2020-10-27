@@ -14,6 +14,7 @@ include_once('layout/header.php');
 include_once('layout/menu.php');
 include_once('layout/sidebar.php');
 ?>
+
 <div class="col">
 <h2 class="titulo">Serviços</h2>
 <span class="badge badge-info totais">Total: <?php echo count($servicos); ?></span>
@@ -23,6 +24,8 @@ include_once('layout/sidebar.php');
       <?php echo $_GET['mensagem']; ?>
     </div>
   <?php endif; ?>
+  <?php include_once('layout/mensagens.php'); ?>
+
     <div class="card">
       <div class="card-body">
 
@@ -82,5 +85,6 @@ include_once('layout/sidebar.php');
       </div>
     </div>
   </div>
-<?php include_once('layout/footer.php');
+<?php include_once('layout/footer.php')
+
 ?>

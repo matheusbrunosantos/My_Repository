@@ -31,3 +31,4 @@ include_once('layout/sidebar.php');
 </div>
 <?php 
 include_once('layout/footer.php');
+?>
