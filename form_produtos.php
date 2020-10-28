@@ -2,14 +2,14 @@
 include_once('layout/header.php');
 include_once('layout/menu.php');
 include_once('layout/sidebar.php');
-include_once('bd/categorias.php');
  ?>
+
 <div class="col">
   <h2>Novo Produto</h2>
+  <?php include_once('layout/mensagens.php'); ?>
   <div class="card">
     <div class="card-body">
-      <form>
-
+      <form action="gerencia_produtos.php?acao=salvar" method="post">
         <div class="row">
           <div class="col-md-6 col-sm-12 form-group">
             <label for="codigo">Codigo</label>
@@ -36,9 +36,29 @@ include_once('bd/categorias.php');
           </div>
           <div class="col-md-4 col-sm-12 form-group">
             <label for="data_compra">Data de compra</label>
-            <input type="date" name="data_compra" class="form-control" id="data_compra" readonly>
+            <input type="date" name="data_compra" class="form-control" id="data_compra">
           </div>
         </div>
+        <div class="row">
+          <div class="col-md-4 col-sm-12 form-group">
+            <label for="nome">Estoque</label>
+            <input type="text" name="estoque" placeholder="" class="form-control">
+          </div>
+        </div>
+        <div class="row">
+        <div class="col-md-6 col-sm-12">
+               <div class="form-group">
+                 <label for="usuario_id">Usuário:</label>
+              <input type="text" name="usuario_id" value="1" placeholder="" readonly="" class="form-control">   
+           </div>
+         </div>
+         <div class="col-md-6 col-sm-12">
+               <div class="form-group">
+                 <label for="categoria_id">Categoria:</label>
+               <input type="text" name="categoria_id" value="1" placeholder="" readonly="" class="form-control">
+               </div>
+               </div> 
+               </div> 
         <div class="row">
          <div class="col">
            <button type="submit" class="btn btn-primary w-100">
