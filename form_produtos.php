@@ -1,4 +1,10 @@
 <?php 
+include_once('bd/conexao.php');
+
+$sql = "SELECT * FROM categoria";
+$qr = mysqli_query($conexao, $sql);
+$categorias = mysqli_fetch_all($qr, MYSQLI_ASSOC);
+
 include_once('layout/header.php');
 include_once('layout/menu.php');
 include_once('layout/sidebar.php');
@@ -16,11 +22,11 @@ include_once('layout/sidebar.php');
             <input type="text" name="codigo" placeholder="Informe o codigo do Produto" class="form-control">
           </div>
           <div class="col-md-6 col-sm-12 form-group">
-            <label for="categoria">Categoría</label>
-            <select class="form-control" name="categoria">
+            <label for="categoria_id">Categoría</label>
+            <select class="form-control" name="categoria_id">
               <option value="">Escolha</option>
               <?php foreach($categorias as $categoria): ?>
-              <option value="<?= $categoria['nome'] ?>"><?= $categoria['nome'] ?></option>
+              <option value="<?= $categoria['id'] ?>"><?= $categoria['categoria'] ?></option>
               <?php endforeach; ?>
             </select>
           </div>
@@ -36,29 +42,17 @@ include_once('layout/sidebar.php');
           </div>
           <div class="col-md-4 col-sm-12 form-group">
             <label for="data_compra">Data de compra</label>
-            <input type="date" name="data_compra" class="form-control" id="data_compra">
+            <input type="date" name="data_compra" class="form-control" id="data_compra" readonly value="<?php echo date('Y-m-d') ?>">
           </div>
         </div>
         <div class="row">
           <div class="col-md-4 col-sm-12 form-group">
             <label for="nome">Estoque</label>
             <input type="text" name="estoque" placeholder="" class="form-control">
+              <input type="hidden" name="usuario_id" value="1" >   
           </div>
         </div>
-        <div class="row">
-        <div class="col-md-6 col-sm-12">
-               <div class="form-group">
-                 <label for="usuario_id">Usuário:</label>
-              <input type="text" name="usuario_id" value="1" placeholder="" readonly="" class="form-control">   
-           </div>
-         </div>
-         <div class="col-md-6 col-sm-12">
-               <div class="form-group">
-                 <label for="categoria_id">Categoria:</label>
-               <input type="text" name="categoria_id" value="1" placeholder="" readonly="" class="form-control">
-               </div>
-               </div> 
-               </div> 
+
         <div class="row">
          <div class="col">
            <button type="submit" class="btn btn-primary w-100">

@@ -8,9 +8,8 @@ if(isset($_GET['id']) && $acao == 'deletar') {
 	$id = $_GET['id'];
 
 	$sql = "DELETE FROM produtos WHERE id = {$id}";
-	$qr = mysqli_query($conexao, $sql);
 
-	if($qr) {
+	if(mysqli_query($conexao, $sql)) {
 		$mensagem = 'Excluído com sucesso!';
 	    $alert = 'success';
 
@@ -19,21 +18,19 @@ if(isset($_GET['id']) && $acao == 'deletar') {
 		$alert = 'danger';
 	}
 
-
-	
-	header("Location: produtos.php?mensagem={$mensagem}&alert={alert}");
+	header("Location: produtos.php?mensagem={$mensagem}&alert={$alert}");
 
 } else if ($acao == 'salvar') {
 
-$codigo = $_POST['codigo'];
-$nome = $_POST['nome'];
-$categoria_id = $_POST['categoria_id'];
-$estoque = $_POST['estoque'];
-$data_compra = $_POST['data_compra'];
-$usuario_id = $_POST['usuario_id'];
-$preco = $_POST['preco'];
+	$codigo = $_POST['codigo'];
+	$nome = $_POST['nome'];
+	$categoria_id = $_POST['categoria_id'];
+	$estoque = $_POST['estoque'];
+	$data_compra = $_POST['data_compra'];
+	$usuario_id = $_POST['usuario_id'];
+	$preco = $_POST['preco'];
 
-if($codigo == '' || $nome == '' || $preco == ''){
+	if($codigo == '' || $nome == '' || $preco == ''){
 
 		$mensagem = "Código, Nome e Preço são obrigatórios";
 
@@ -41,7 +38,7 @@ if($codigo == '' || $nome == '' || $preco == ''){
 		exit;
 	}
 	
-$sql = "INSERT INTO produtos 
+	$sql = "INSERT INTO produtos 
 			(codigo, 
 			nome, 
 			categoria_id, 

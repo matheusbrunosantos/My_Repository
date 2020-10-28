@@ -7,7 +7,7 @@ include_once('layout/sidebar.php');
   <h2>Novo equipamento</h2>
   <div class="card">
     <div class="card-body">
-      <form>
+      <form action="gerencia_equipamentos.php?acao=salvar" method="post">
 
         <div class="row">
           <div class="col-md-6 col-sm-12 form-group">
@@ -15,15 +15,9 @@ include_once('layout/sidebar.php');
             <input type="text" name="codigo" placeholder="Informe o codigo do Produto" class="form-control">
           </div>
           <div class="col-md-6 col-sm-12 form-group">
-            <label for="categoria">Categoría</label>
-            <select class="form-control" name="categoria">
-              <option value="categoria">Categoria</option>
-              <option value="categoria">Categoria</option>
-              <option value="categoria">Categoria</option>
-              <option value="categoria">Categoria</option>
-              <option value="categoria">Categoria</option>
-              <option value="categoria">Categoria</option>
-              <option value="categoria">Categoria</option>
+            <label for="categoria_id">Categoria</label>
+            <select class="form-control" name="categoria_id">
+              <option value="1">Categoria</option>
             </select>
           </div>
         </div>
@@ -38,7 +32,7 @@ include_once('layout/sidebar.php');
           </div>
           <div class="col-md-4 col-sm-12 form-group">
             <label for="data_compra">Data de compra</label>
-            <input type="date" name="data_compra" class="form-control" id="data_compra" readonly>
+            <input type="date" name="data_compra" class="form-control" id="data_compra" readonly value="<?php echo date('Y-m-d') ?>">
           </div>
         </div>
         <div class="row">

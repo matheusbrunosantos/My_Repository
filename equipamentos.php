@@ -2,12 +2,18 @@
 include_once('layout/header.php');
 include_once('layout/menu.php');
 include_once('layout/sidebar.php');
-include_once('bd/equipamentos.php');
+include_once('bd/conexao.php');
+
+$sql = "SELECT * FROM produtos";
+  $qr = mysqli_query($conexao, $sql);
+  $produtos = mysqli_fetch_all($qr, MYSQLI_ASSOC);
 ?>
 <div class="col">
   <h2 class="titulo">Equipamentos</h2>
-  <span class="badge badge-info totais">Total: <?php echo count($equipamentos); ?></span>
+  <span class="badge badge-info totais">Total: <?php echo count($produtos); ?></span>
   <div class="clear"></div>
+  <?php include_once('layout/mensagens.php'); ?>
+
   <div class="card">
     <div class="card-body">
       <a href="form_equipamentos.php" class="btn btn-primary" style="float: right">
@@ -26,12 +32,12 @@ include_once('bd/equipamentos.php');
             <th>Código</th>
             <th class="acao">Ação</th>
           </tr>
-          <?php foreach ($equipamentos as $key => $equipamentos): ?>
+          <?php foreach ($produtos as $key => $produto): ?>
           <tr>
-            <td><?= $equipamentos['nome'] ?></td>
-            <td><?= (isset($equipamentos['categoria']) ? $equipamentos['categoria'] : 'Não definida') ?></td>
-            <td><?= $equipamentos['data_compra'] ?? 'Não informada' ?></td>
-            <td><?= $equipamentos['codigo'] ?></td>
+            <td><?= $produto['nome'] ?></td>
+            <td><?= (isset($produto['categoria_id']) ? $produto['categoria_id'] : 'Não definida') ?></td>
+            <td><?= $produto['data_compra'] ?? 'Não informada' ?></td>
+            <td><?= $produto['id'] ?></td>
             <td>
               <a href="#" class="btn btn-secondary">
                 <i class="fas fa-eye"></i>
@@ -39,7 +45,7 @@ include_once('bd/equipamentos.php');
               <a href="#" class="btn btn-warning">
                 <i class="fas fa-edit"></i>
               </a>
-              <a href="#" class="btn btn-danger">
+              <a href="gerencia_equipamentos.php?id=<?php echo $produto['id']; ?>&acao=deletar" class="btn btn-danger" onclick="return confirm('Deseja realmente excluir?')">
                 <i class="fas fa-trash"></i>
               </a>
             </td>

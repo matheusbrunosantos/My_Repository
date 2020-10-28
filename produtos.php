@@ -2,7 +2,9 @@
 include_once('bd/conexao.php');
 
 //Monta a consulta a ser executada
-$sql = "SELECT * FROM produtos";
+$sql = "SELECT p.*, c.categoria 
+        FROM produtos p 
+        LEFT JOIN categoria c ON p.categoria_id = c.id";
 
 //Execução da consulta ao banco de dados
 $qr = mysqli_query($conexao, $sql);
@@ -47,7 +49,7 @@ include_once('layout/sidebar.php');
           <tr>
             <td><?php echo $produto['codigo']; ?></td>
             <td><?php echo $produto['nome']; ?></td>
-            <td><?php echo $produto['categoria_id'] ?></td>
+            <td><?php echo $produto['categoria'] ?></td>
             <td><?php echo $produto['estoque'] ?></td>
             <td><?php echo $produto['data_compra'] ?></td>
             <td><?php echo number_format($produto['preco'], 2,',','.'); ?></td>
@@ -58,7 +60,7 @@ include_once('layout/sidebar.php');
               <a href="#" class="btn btn-warning">
                 <i class="fas fa-edit"></i>
               </a>
-              <a href="gerencia_produtos.php?id=<?php echo $produto['id']; ?>" class="btn btn-danger" onclick="return confirm('Deseja realmente deletar?')">
+              <a href="gerencia_produtos.php?id=<?php echo $produto['id']; ?>&acao=deletar" class="btn btn-danger" onclick="return confirm('Deseja realmente deletar?')">
                 <i class="fas fa-trash"></i>
               </a>
             </td>
