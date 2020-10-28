@@ -39,9 +39,9 @@ if(isset($_GET['id']) && $acao == 'deletar') {
 	$estado = $_POST['estado'];
 
 	$sql = "INSERT INTO fornecedores 
-			(razao_social, fantasia, cnpj, email, telefone, nome_contato, logradouro, numero, complemento, bairro, cidade, estado,usuario_id) 
+			(razao_social, fantasia, cnpj, email, telefone, nome_contato, cep ,logradouro, numero, complemento, bairro, cidade, estado,usuario_id) 
 			VALUES
-			('$razao', '$nome','$cnpj', '$email', '$telefone', '$nome_contato', '$logradouro','$numero', '$complemento', '$bairro', '$cidade', '$estado','1');";
+			('$razao', '$nome','$cnpj', '$email', '$telefone', '$nome_contato', '$cep','$logradouro','$numero', '$complemento', '$bairro', '$cidade', '$estado','1');";
 
 
 	mysqli_query($conexao, $sql);
