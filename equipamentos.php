@@ -4,7 +4,9 @@ include_once('layout/menu.php');
 include_once('layout/sidebar.php');
 include_once('bd/conexao.php');
 
-$sql = "SELECT * FROM produtos";
+$sql = "SELECT p.*, c.categoria FROM produtos p 
+        LEFT JOIN categoria c ON p.categoria_id = c.id
+        WHERE c.tipo = 'Equipamentos'";
   $qr = mysqli_query($conexao, $sql);
   $produtos = mysqli_fetch_all($qr, MYSQLI_ASSOC);
 ?>
@@ -26,26 +28,26 @@ $sql = "SELECT * FROM produtos";
       <br />
       <table class="table table-striped table-hover">
           <tr>
+            <th>Código</th>
             <th>Nome</th>
             <th>Categoria</th>
             <th>Data de Compra</th>
-            <th>Código</th>
             <th class="acao">Ação</th>
           </tr>
           <?php foreach ($produtos as $key => $produto): ?>
           <tr>
+            <td><?= $produto['codigo'] ?></td>
             <td><?= $produto['nome'] ?></td>
-            <td><?= (isset($produto['categoria_id']) ? $produto['categoria_id'] : 'Não definida') ?></td>
+            <td><?= (isset($produto['categoria']) ? $produto['categoria'] : 'Não definida') ?></td>
             <td><?= $produto['data_compra'] ?? 'Não informada' ?></td>
-            <td><?= $produto['id'] ?></td>
             <td>
               <a href="#" class="btn btn-secondary">
                 <i class="fas fa-eye"></i>
               </a>
-              <a href="#" class="btn btn-warning">
+              <a href="form_equipamentos.php?id=<?= $produto['id'] ?>" class="btn btn-warning">
                 <i class="fas fa-edit"></i>
               </a>
-              <a href="gerencia_equipamentos.php?id=<?php echo $produto['id']; ?>&acao=deletar" class="btn btn-danger" onclick="return confirm('Deseja realmente excluir?')">
+              <a href="gerencia_equipamentos.php?id=<?= $produto['id']; ?>&acao=deletar" class="btn btn-danger" onclick="return confirm('Deseja realmente excluir?')">
                 <i class="fas fa-trash"></i>
               </a>
             </td>

@@ -70,11 +70,16 @@ if (isset($_GET['id']) && $acao == 'deletar') {
 			('$nome', '$cpf', '$email', '$telefone', '$cep','$logradouro','$numero', '$complemento', '$bairro', '$cidade', '$estado', '$senha');
 ";
 
-	mysqli_query($conexao, $sql);
+	if (mysqli_query($conexao, $sql)) {
+		$mensagem = 'Salvo com sucesso!';
+		$alert    = 'success';
 
-	$mensagem = 'Salvo com sucesso!';
+	} else {
+		$mensagem = 'Erro ao salvar: '.mysqli_error($conexao);
+		$alert    = 'danger';
+	}
 
-	header("Location: colaboradores.php?mensagem={$mensagem}&alert=success");
+	header("Location: colaboradores.php?mensagem={$mensagem}&alert=$alert");
 }
 
 ?>

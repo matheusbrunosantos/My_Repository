@@ -35,17 +35,19 @@ include_once('layout/sidebar.php');
       <table class="table table-striped table-hover">
       <tr>
         <th>Categoria</th>
+        <th>Tipo</th>
         <th class="acao">Ações</th>
       </tr>
       <?php foreach($categorias as $chave => $categoria): ?>
     <tr>
       <td><?= $categoria['categoria'] ?></td>
+      <td><?= $categoria['tipo'] ?></td>
     
       <td>
         <a href="#" class="btn btn-secondary">
           <i class="fas fa-eye"></i>
         </a>
-        <a href="#" class="btn btn-warning">
+        <a href="form_categorias.php?id=<?php echo $categoria['id']; ?>" class="btn btn-warning">
           <i class="fas fa-edit"></i>
         </a>
         <a href="gerencia_categorias.php?id=<?php echo $categoria['id']; ?>&acao=deletar" class="btn btn-danger" onclick="return confirm('Deseja realmente excluir?')">
