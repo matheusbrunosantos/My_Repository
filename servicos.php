@@ -2,8 +2,21 @@
 include_once('bd/conexao.php');
 
 //Monta a consulta a ser executada
-$sql = "SELECT s.*, c.categoria FROM servicos s
-LEFT JOIN categoria c ON s.categoria_id = c.id";
+if (isset($_GET['pesquisa']) && $_GET['pesquisa'] != '') {
+  $pesquisa = $_GET['pesquisa'];
+
+  $sql = "SELECT s.*, c.categoria FROM servicos s
+  LEFT JOIN categoria c ON s.categoria_id = c.id
+        WHERE s.codigo LIKE '%{$pesquisa}%'
+        OR s.nome LIKE '%{$pesquisa}%'
+        OR s.descricao LIKE '%{$pesquisa}%'
+        OR s.preco LIKE '%{$pesquisa}%'
+        OR c.categoria LIKE '%{$pesquisa}%'";
+
+}else {
+  $sql = "SELECT s.*, c.categoria FROM servicos s
+  LEFT JOIN categoria c ON s.categoria_id = c.id";
+}
 
 //Execução da consulta ao banco de dados
 $qr = mysqli_query($conexao, $sql);
@@ -67,7 +80,9 @@ include_once('layout/sidebar.php');
       </tr>
     <?php endforeach; ?>
     </table>
-
+    <?php if (empty($servicos)): ?>
+      <div class="alert alert-info">Nenhuma Informação encontrada.</div>
+    <?php endif; ?>
     <nav ar
     ia-label="Navegação de página exemplo">
       <ul class="pagination">
