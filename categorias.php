@@ -2,7 +2,16 @@
 include_once('bd/conexao.php');
 
 //Monta a consulta a ser executada
-$sql = "SELECT * FROM categoria";
+if(isset($_GET['pesquisa']) && $_GET['pesquisa'] != '') {
+  $pesquisa = $_GET['pesquisa'];
+
+  $sql = "SELECT * FROM categoria 
+          WHERE 
+            categoria LIKE '%{$pesquisa}%' OR
+            tipo LIKE '%{$pesquisa}%'";
+} else {
+  $sql = "SELECT * FROM categoria";
+}
 
 //Execução da consulta ao banco de dados
 $qr = mysqli_query($conexao, $sql);
@@ -58,6 +67,9 @@ include_once('layout/sidebar.php');
     </tr>
   <?php endforeach; ?>
   </table>
+  <?php if(empty($categorias)): ?>
+    <div class="alert alert-info">Nenhuma informação encontrada.</div>
+  <?php endif; ?>
 
   <nav aria-label="Navegação de página exemplo">
     <ul class="pagination">

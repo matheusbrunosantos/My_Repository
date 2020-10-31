@@ -4,9 +4,22 @@ include_once('layout/menu.php');
 include_once('layout/sidebar.php');
 include_once('bd/conexao.php');
 
+
+if(isset($_GET['pesquisa']) && $_GET['pesquisa'] != '') {
+  $pesquisa = $_GET['pesquisa'];
+
+  $sql = "SELECT p.*, c.categoria FROM produtos p 
+          LEFT JOIN categoria c ON p.categoria_id = c.id
+          WHERE c.tipo = 'Equipamentos' AND (nome LIKE '%{$pesquisa}%' OR codigo LIKE '%{$pesquisa}%')";
+}else {
+
 $sql = "SELECT p.*, c.categoria FROM produtos p 
         LEFT JOIN categoria c ON p.categoria_id = c.id
         WHERE c.tipo = 'Equipamentos'";
+
+}
+
+
   $qr = mysqli_query($conexao, $sql);
   $produtos = mysqli_fetch_all($qr, MYSQLI_ASSOC);
 ?>
@@ -55,6 +68,9 @@ $sql = "SELECT p.*, c.categoria FROM produtos p
         <?php endforeach; ?>
 
       </table>
+      <?php if(empty($produtos)): ?>
+            <div class="alert alert-info">Nenhuma informação encontrada.</div>
+          <?php endif; ?>
        <nav aria-label="Navegação de página exemplo" class="pagination">
         <ul class="pagination">
           <li class="page-item"><a class="page-link" href="#">Anterior</a></li>

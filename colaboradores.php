@@ -4,7 +4,17 @@ include_once('layout/header.php');
 include_once('layout/menu.php');
 include_once('layout/sidebar.php');
 
+
+if(isset($_GET['pesquisa']) && $_GET['pesquisa'] != '') {
+  $pesquisa = $_GET['pesquisa'];
+
+  $sql = "SELECT * FROM colaboradores WHERE nome LIKE '%{$pesquisa}%' OR cpf LIKE '%{$pesquisa}%'";
+}else {
+
 $sql = "SELECT * FROM colaboradores;";
+
+}
+
 $qr = mysqli_query($conexao, $sql);
 $colaboradores = mysqli_fetch_all($qr, MYSQLI_ASSOC);
 
@@ -39,7 +49,7 @@ $colaboradores = mysqli_fetch_all($qr, MYSQLI_ASSOC);
           <td><?= $colaborador['email'] ?></td>
           <td><?= $colaborador['telefone'] ?></td>
           <td>
-            <a href="#" class="btn btn-success">
+            <a href="#" class="btn btn-secondary" data-toggle="modal" data-target="#modalVerDados" onclick="verDados(<?php echo $colaborador['id']; ?>)">
               <i class="fas fa-eye"></i>
             </a>
             <a href="#" class="btn btn-warning">
@@ -52,6 +62,9 @@ $colaboradores = mysqli_fetch_all($qr, MYSQLI_ASSOC);
         </tr>
       <?php endforeach; ?>
       </table>
+      <?php if(empty($colaboradores)): ?>
+            <div class="alert alert-info">Nenhuma informação encontrada.</div>
+          <?php endif; ?>
 
       <nav aria-label="Navegação de página exemplo" class="pagination">
         <ul class="pagination">
@@ -70,3 +83,34 @@ $colaboradores = mysqli_fetch_all($qr, MYSQLI_ASSOC);
 <?php 
 include_once('layout/footer.php');
 ?>
+<script>
+  function verDados(id) {
+    $.ajax({
+      url: 'gerencia_colaboradores.php?acao=get&id=' + id,
+      type: 'GET',
+      beforeSend: function() {
+        $('#carregando').fadeIn();
+      }
+    })
+    .done(function(dados) {
+      var dados_json = JSON.parse(dados);
+      var texto = '';
+      Object.keys(dados_json).forEach(function(k){
+          var th = k.replace('_', ' ');
+          texto += `<p><strong style="text-transform: capitalize">${th}</strong>: ${dados_json[k] ?? ''}</p>`;
+      });
+
+       $('#titulo-modal').html('Colaborador: ' + dados_json.nome);
+       $('#corpo-modal').html(texto);
+
+
+    })
+    .fail(function() {
+      alert('Dados não encontrados.')
+    })
+    .always(function() {
+      $('#carregando').fadeOut();
+    });
+    
+  }
+</script>

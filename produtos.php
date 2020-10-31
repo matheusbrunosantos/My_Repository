@@ -5,16 +5,15 @@ include_once('bd/conexao.php');
 if (isset($_GET['pesquisa']) && $_GET['pesquisa'] != '') {
   $pesquisa = $_GET['pesquisa'];
 
-  $sql = "SELECT p.*, c.categoria 
-        FROM produtos p 
-        LEFT JOIN categoria c ON p.categoria_id = c.id
-        WHERE c.tipo = 'Produtos'
-        WHERE p.codigo LIKE '%{$pesquisa}%'
-        OR p.nome LIKE '%{$pesquisa}%'
-        OR c.categoria LIKE '%{$pesquisa}%'
-        OR p.estoque LIKE '%{$pesquisa}%'
-        OR p.data_compra LIKE '%{$pesquisa}%'
-        OR p.preco LIKE '%{$pesquisa}%'";
+  $sql = "SELECT p.*, c.categoria  FROM produtos p 
+          LEFT JOIN categoria c ON p.categoria_id = c.id
+          WHERE c.tipo = 'Produtos'
+          AND (p.codigo LIKE '%{$pesquisa}%'
+          OR p.nome LIKE '%{$pesquisa}%'
+          OR c.categoria LIKE '%{$pesquisa}%'
+          OR p.estoque LIKE '%{$pesquisa}%'
+          OR p.data_compra LIKE '%{$pesquisa}%'
+          OR p.preco LIKE '%{$pesquisa}%')";
 
 }else {
   $sql = "SELECT p.*, c.categoria 

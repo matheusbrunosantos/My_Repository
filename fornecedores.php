@@ -4,7 +4,16 @@
   include_once('layout/menu.php');
   include_once('layout/sidebar.php');
 
-  $sql = "SELECT * FROM fornecedores";
+if(isset($_GET['pesquisa']) && $_GET['pesquisa'] != '') {
+  $pesquisa = $_GET['pesquisa'];
+
+  $sql = "SELECT * FROM fornecedores WHERE fantasia LIKE '%{$pesquisa}%' OR cnpj LIKE '%{$pesquisa}%'";
+}else {
+$sql = "SELECT * FROM fornecedores";
+}
+
+
+
   $qr = mysqli_query($conexao, $sql);
   $fornecedores = mysqli_fetch_all($qr, MYSQLI_ASSOC);
  
@@ -58,14 +67,14 @@
               <td><?php echo $fornecedores[$i]['cidade'] . '/' . $fornecedores[$i]['estado']  ?></td>
 
               <td>
-                <a href="#" class="btn btn-secondary" data-toggle="modal" data-target="#modalVerCliente">
+                <a href="#" class="btn btn-secondary ver-dados" data-toggle="modal" data-target="#modalVerDados" onclick="verDados(<?php echo $fornecedores[$i]['id']; ?>)" >
                   <i class="fas fa-eye"></i>
                 </a>
                 <a href="form_fornecedores.php?id=<?php echo $fornecedores[$i]['id']; ?>" class="btn btn-warning">
                   <i class="fas fa-edit"></i>
                 </a>
-                <a href="gerencia_fornecedores.php?id=<?php echo $fornecedores[$i]['id']; ?>&acao=deletar" class="btn btn-danger">
-                  <i class="fas fa-trash" onclick="return confirm('Deseja realmente excluir?')"></i>
+                <a href="gerencia_fornecedores.php?id=<?php echo $fornecedores[$i]['id']; ?>&acao=deletar" class="btn btn-danger" onclick="return confirm('Deseja realmente excluir?')">
+                  <i class="fas fa-trash"></i>
                 </a>
               </td>
             </tr>
@@ -75,7 +84,10 @@
           ?>
             
           </table>
-
+          <?php if(empty($fornecedores)): ?>
+            <div class="alert alert-info">Nenhuma informação encontrada.</div>
+          <?php endif; ?>
+        </div>
           <nav aria-label="Navegação de página exemplo">
             <ul class="pagination">
 
@@ -95,22 +107,32 @@
 include_once('layout/footer.php');
 ?>
 
-
-    <div class="modal fade" id="modalVerCliente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Título do modal</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            Dados do fornecedor
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-          </div>
-        </div>
-      </div>
-    </div>
+<script>
+  function verDados(id) {
+    $.ajax({
+      url: 'gerencia_fornecedores.php?acao=get&id=' + id,
+      type: 'GET',
+      beforeSend: function() {
+        $('#carregando').fadeIn();
+      }
+    })
+    .done(function(dados) {
+      var dados_json = JSON.parse(dados);
+      var tabela = `<table>`;
+      var texto = '';
+      Object.keys(dados_json).forEach(function(k){
+          var th = k.replace('_', ' ');
+          texto += `<p><strong style="text-transform: capitalize">${th}</strong>: ${dados_json[k] ?? ''}</p>`;
+      });
+      $('#titulo-modal').html('Fornecedor: ' + dados_json.razao_social);
+      $('#corpo-modal').html(texto);
+    })
+    .fail(function() {
+      alert('Informações não encontradas.');
+    })
+    .always(function() {
+      $('#carregando').fadeOut();
+    });
+    
+  }
+</script>

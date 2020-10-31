@@ -80,6 +80,13 @@ if (isset($_GET['id']) && $acao == 'deletar') {
 	}
 
 	header("Location: colaboradores.php?mensagem={$mensagem}&alert=$alert");
+} else if (isset($_GET['id']) && $acao == 'get') {
+	$id = $_GET['id'];
+
+	$sql         = "SELECT nome, cpf, email,telefone, logradouro,numero, bairro, cidade, estado,cep FROM colaboradores WHERE id = {$id}";
+	$qr          = mysqli_query($conexao, $sql);
+	$colaborador = mysqli_fetch_assoc($qr);
+	echo json_encode($colaborador);
 }
 
 ?>
