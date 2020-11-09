@@ -6,7 +6,7 @@ Deprecated: The each() function is deprecated. This message will be suppressed o
       <div class="col-md-2">
 
 
-      <a class="navbar-brand" href="index.html">
+      <a class="navbar-brand" href="dashboard.php">
         <img src="img/laborus.png" height="36px" alt="">
       </a>
     </div>
@@ -23,7 +23,7 @@ Deprecated: The each() function is deprecated. This message will be suppressed o
           <a class="nav-link" href="#" id="toggle"><i class="fas fa-bars icone-sidebar"></i></a>
         </li>
         <li class="nav-item active">
-          <a class="nav-link" href="index.php">Inicial</a>
+          <a class="nav-link" href="dashboard.php">Inicial</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Mensagens</a>
@@ -44,25 +44,33 @@ Deprecated: The each() function is deprecated. This message will be suppressed o
         </li>
 
       </ul>
-      <form action="" class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="search" name="pesquisa" placeholder="Pesquisar" aria-label="Pesquisar">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Pesquisar</button>
-      </form>
-
       <div class="profile">
         <div class="dropdown">
-          <a class=" dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <img src="img/avatar.jpg" alt="">
+
+<?php echo $_SESSION['nome'];?>
           </a>
 
           <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
             <a class="dropdown-item" href="#">Alguma ação</a>
             <a class="dropdown-item" href="#">Outra ação</a>
-            <a class="dropdown-item" href="#">Sair</a>
+            <a class="dropdown-item" href="gerencia_logout.php">Sair</a>
           </div>
         </div>
 
       </div>
+      <form action="" class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="search" name="pesquisa" placeholder="Pesquisar" aria-label="Pesquisar" value="<?php echo (isset($_GET['pesquisa']) && $_GET['pesquisa'] != ''?$_GET['pesquisa']:'');?>" autofocus>
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+          <i class="fas fa-search"></i>
+        </button>
+        <a href="?" title="" class="btn btn-outline-warning my-2 my-sm-0" title="Limpar Filtro">
+          <i class="far fa-times-circle"></i>
+        </a>
+      </form>
+
+
     </div>
     </div>
     </div>

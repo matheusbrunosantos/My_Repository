@@ -67,13 +67,15 @@ include_once ('layout/sidebar.php');
         <td><?=number_format($servico['preco'], 2, ',', '.')?></td>
         <td><?=$servico['categoria']?></td>
         <td>
-          <a href="#" class="btn btn-secondary">
+          <a href="#" class="btn btn-secondary" data-toggle="modal" data-target="#modalVerDados" onclick="verDados(
+<?php echo $servico['id'];?>
+               )">
             <i class="fas fa-eye"></i>
           </a>
           <a href="form_servicos.php?id=<?php echo $servico['id'];?>" class="btn btn-warning">
             <i class="fas fa-edit"></i>
           </a>
-           <a href="gerencia_servicos.php?id=<?php echo $servico['id'];?>" class="btn btn-danger" onclick="return confirm('Deseja realmente excluir?')">
+           <a href="gerencia_servicos.php?id=<?php echo $servico['id'];?>&acao=deletar" class="btn btn-danger" onclick="return confirm('Deseja realmente excluir?')">
           <i class="fas fa-trash"></i>
           </a>
         </td>
@@ -97,6 +99,39 @@ include_once ('layout/sidebar.php');
       </div>
     </div>
   </div>
-<?php include_once ('layout/footer.php')
+<?php include_once ('layout/footer.php');
 
 ?>
+<script>
+  function verDados(id) {
+    $.ajax({
+      url: 'gerencia_servicos.php?acao=get&id=' + id,
+      type: 'GET',
+      beforeSend: function() {
+        $('#carregando').fadeIn();
+      }
+    })
+    .done(function(dados) {
+      var dados_json = JSON.parse(dados);
+      var texto = '';
+      Object.keys(dados_json).forEach(function(k) {
+          var th = k.replace('_', ' ');
+          texto += `<p><strong
+                style ="text-transform: capitalize">
+                ${th}</strong>: ${dados_json[k] ?? ''}</p>`;
+      });
+
+      $('#titulo-modal').html('Servico: ' + dados_json.nome);
+      $('#corpo-modal').html(texto);
+
+
+    })
+    .fail(function() {
+      alert('Dados não Encontrados.')
+      })
+    .always(function() {
+      $('#carregando').fadeOut();
+    });
+
+    }
+</script>

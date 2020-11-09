@@ -1,4 +1,5 @@
 <?php 
+include_once('valida_sessao.php');
 include_once('bd/conexao.php');
 
 $acao = $_GET['acao'] ?? 'redirect';
@@ -66,7 +67,7 @@ if($id == ''){
 } else if(isset($_GET['id']) && $acao == 'get') {
 	$id = $_GET['id'];
 
-	$sql = "SELECT codigo, nome, descricao, preco FROM servicos WHERE id = {$id}";
+	$sql = "SELECT codigo, nome, descricao as 'Descrição', CONCAT('R$ ',FORMAT(preco, 2, 'pt_BR')) as preco FROM servicos WHERE id = {$id}";
 	$qr = mysqli_query($conexao, $sql);
 	$servico = mysqli_fetch_assoc($qr);
 	echo json_encode($servico);

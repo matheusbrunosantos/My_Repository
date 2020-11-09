@@ -81,7 +81,6 @@ if(isset($_GET['id']) && $acao == 'deletar') {
 
 } else if(isset($_GET['id']) && $acao == 'get') {
 	$id = $_GET['id'];
-
 	$sql = "SELECT * FROM fornecedores WHERE id = {$id}";
 	$qr = mysqli_query($conexao, $sql);
 
