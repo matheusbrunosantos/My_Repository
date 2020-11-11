@@ -1,5 +1,4 @@
 <?php 
-include_once('valida_sessao.php');
 include_once('bd/conexao.php');
 
 $acao = $_GET['acao'] ?? 'redirect';

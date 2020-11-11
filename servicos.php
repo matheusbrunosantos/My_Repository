@@ -7,15 +7,17 @@ include_once('layout/sidebar.php');
 
 <div class="col">
 <h2 class="titulo">Serviços</h2>
-<span class="badge badge-info totais">Total: <?php //echo count($servicos); ?></span>
+<span class="badge badge-info totais">Total: 
+<span id="total"></span> <?php //echo count($categorias); ?></span>
 <div class="clear"></div>
+
   <?php include_once('layout/mensagens.php'); ?>
 
     <div class="card">
       <div class="card-body">
-
+        <span id="mensagem"></span>
         <a href="form_servicos.php" class="btn btn-primary" style="float: right">
-          <i class="fas fa-cart-plus"></i> Novo serviço
+          <i class="fas fa-user"></i> Novo serviço
         </a>
         <a href="javascript:history.back(-1)" class="btn btn-secondary voltar">
           <i class="fas fa-arrow-left"></i> Voltar
@@ -57,6 +59,7 @@ include_once('layout/sidebar.php');
 
 ?>
 <script>
+  var algumacoisa
   $(document).ready(function() {
     carregaDados();
   });
@@ -75,10 +78,10 @@ include_once('layout/sidebar.php');
           var th = index.replace('_', ' ');
           texto += `<p><strong
                 style ="text-transform: capitalize">
-                ${th}</strong>: ${dados_json[index] ?? ''}</p>`;
+                ${th}</strong>: ${data.dados[index] ?? ''}</p>`;
       });
 
-      $('#titulo-modal').html(`Servico: ${data.dados.servico}` );
+      $('#titulo-modal').html(`Servico: ${data.dados.nome}` );
       $('#corpo-modal').html(texto);
 
 
@@ -92,6 +95,29 @@ include_once('layout/sidebar.php');
 
     }
 
+    function deletarDados(id) {
+      if (confirm('Deseja realmente excluir?')) {
+        $.ajax({
+          url: 'api/servicos.php?acao=deletar&id=' + id,
+          type: 'DELETE',
+          dataType: 'json',
+          beforeSend: function() {
+            $('#carregando').fadeIn();
+          }
+        })
+        .done(function(data) {
+          $('#mensagem').html(retornaMensagemAlert(data.mensagem, data.alert));
+          carregaDados();
+        })
+        .fail(function(data) {
+          $('#mensagem').html(retornaMensagemAlert(data.mensagem, data.alert));
+        })
+        .always(function(){
+          $('#carregando').fadeOut();
+        });
+      }
+
+    }
     function carregaDados() {
       $.ajax({
         url: 'api/servicos.php?acao=listar',
@@ -114,13 +140,13 @@ include_once('layout/sidebar.php');
         <td>${value.preco}</td>
         <td>${value.categoria_id}</td>
         <td>
-          <a href="#" class="btn btn-secondary" data-toggle="modal" data-target="#modalVerDados" onclick="verDados(${value.id}
+          <a href="#" class="btn btn-secondary" data-toggle="modal" data-target="#modalVerDados" onclick="verDados(${value.id})">
             <i class="fas fa-eye"></i>
           </a>
-          <a href="form_servicos.php?id=<?php echo $servico['id']; ?>" class="btn btn-warning">
+          <a href="form_servicos.php?id=${value.id}" class="btn btn-warning">
             <i class="fas fa-edit"></i>
           </a>
-           <a href="gerencia_servicos.php?id=${value.id}&acao=deletar" class="btn btn-danger" onclick="return confirm('Deseja realmente excluir?')">
+           <a href="#" class="btn btn-danger" onclick="deletarDados(${value.id})">
           <i class="fas fa-trash"></i>
           </a>
         </td>

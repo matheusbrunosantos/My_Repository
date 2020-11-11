@@ -1,36 +1,34 @@
+<?php 
+include_once('bd/conexao.php');
 
-Deprecated: The each() function is deprecated. This message will be suppressed on further calls in C:\Users\trazo\AppData\Roaming\Sublime Text 3\Packages\PHPTools\php.tools\codeFormatter.php on line 54
-<?php
-include_once ('bd/conexao.php');
+if(isset($_GET['pesquisa']) && $_GET['pesquisa'] != '') {
 
-if (isset($_GET['pesquisa']) && $_GET['pesquisa'] != '') {
+  $pesquisa = $_GET['pesquisa'];
 
-	$pesquisa = $_GET['pesquisa'];
-
-	$sql = "SELECT * FROM clientes
-      WHERE
-        nome LIKE '%{$pesquisa}%' OR
+  $sql = "SELECT * FROM clientes 
+      WHERE 
+        nome LIKE '%{$pesquisa}%' OR 
         email LIKE '%{$pesquisa}%'";
 
 } else {
-	$sql = "SELECT * FROM clientes;";
-
+  $sql = "SELECT * FROM clientes;";
 }
 
-$qr       = mysqli_query($conexao, $sql);
+
+$qr = mysqli_query($conexao, $sql);
 $clientes = mysqli_fetch_all($qr, MYSQLI_ASSOC);
 
-include_once ('layout/header.php');
-include_once ('layout/menu.php');
-include_once ('layout/sidebar.php');
+include_once('layout/header.php');
+include_once('layout/menu.php');
+include_once('layout/sidebar.php');
 
-?>
+ ?>
 <div class="col">
 <h2 class="titulo">Gestão de clientes</h2>
-<span class="badge badge-info totais">Total: <?php echo count($clientes);?></span>
+<span class="badge badge-info totais">Total: <?php echo count($clientes); ?></span>
 <div class="clear"></div>
-<?php include_once ('layout/mensagens.php');?>
-<div class="card">
+<?php include_once('layout/mensagens.php'); ?>
+  <div class="card">
     <div class="card-body">
       <a href="form_cliente.php" class="btn btn-primary" style="float: right">
         <i class="fas fa-user"></i> Novo cliente
@@ -51,38 +49,39 @@ include_once ('layout/sidebar.php');
       <th>Ações</th>
     </tr>
     <!-- linha para cada elemento -->
-<?php foreach ($clientes as $chave => $cliente):?>
+    <?php foreach($clientes as $chave => $cliente): ?>
     <tr>
-      <td><?php echo $chave+1;?></td>
-      <td><?=$cliente['nome']?></td>
-      <td><?=$cliente['cpf']?></td>
-      <td><?=$cliente['telefone']?></td>
+      <td><?php echo $chave + 1; ?></td>
+      <td><?= $cliente['nome'] ?></td>
+      <td><?= $cliente['cpf'] ?></td>
+      <td><?= $cliente['telefone']  ?></td>
       <td>
-        <a href="mailto:<?=$cliente['email']?>">
-<?=$cliente['email']?>
+        <a href="mailto:<?= $cliente['email']  ?>">
+          <?= $cliente['email']  ?>
         </a>
       </td>
-      <td><?=$cliente['convenio']?></td>
+      <td><?= $cliente['convenio']  ?></td>
       <td>
-        <a href="#" class="btn btn-secondary"  data-toggle="modal" data-target="#modalVerDados" onclick="verDados(<?php echo $cliente['id'];?>)">
+        <a href="#" class="btn btn-secondary"  data-toggle="modal" data-target="#modalVerDados" onclick="verDados(<?php echo $cliente['id']; ?>)"> 
           <i class="fas fa-eye"></i>
         </a>
-        <a href="form_cliente.php?id=<?php echo $cliente['id']?>" class="btn btn-warning">
+        <a href="form_cliente.php?id=<?php echo $cliente['id'] ?>" class="btn btn-warning">
           <i class="fas fa-edit"></i>
         </a>
-        <a href="gerencia_clientes.php?id=<?php echo $cliente['id'];?>&acao=deletar" class="btn btn-danger" onclick="return confirm('Deseja realmente deletar?')">
+        <a href="gerencia_clientes.php?id=<?php echo $cliente['id']; ?>&acao=deletar" class="btn btn-danger" onclick="return confirm('Deseja realmente deletar?')">
           <i class="fas fa-trash"></i>
         </a>
       </td>
     </tr>
-<?php endforeach;?>
-<!-- /linha para cada elemento -->
+    <?php endforeach; ?>
+    <!-- /linha para cada elemento -->
 
   </table>
-<?php if (empty($clientes)):?>
-<div class="alert alert-info">Nenhuma informação encontrada.</div>
-<?php endif;?>
-<nav aria-label="Navegação de página exemplo">
+    <?php if(empty($clientes)): ?>
+    <div class="alert alert-info">Nenhuma informação encontrada.</div>
+  <?php endif; ?>
+
+  <nav aria-label="Navegação de página exemplo">
     <ul class="pagination">
 
       <li class="page-item"><a class="page-link" href="#">Anterior</a></li>
@@ -96,8 +95,8 @@ include_once ('layout/sidebar.php');
 </div>
 </div>
 
-<?php
-include_once ('layout/footer.php');
+<?php 
+include_once('layout/footer.php');
 ?>
 
 <script>
@@ -115,7 +114,7 @@ include_once ('layout/footer.php');
       Object.keys(dados_json).forEach(function(k){
           var th = k.replace('_', ' ');
           texto += `<p><strong style="text-transform: capitalize">${th}</strong>: ${dados_json[k] ?? ''}</p>`;
-      });
+      }); 
       $('#titulo-modal').html('Cliente: ' + dados_json.nome);
       $('#corpo-modal').html(texto);
     })
