@@ -83,7 +83,7 @@ include_once('layout/sidebar.php');
 ?>
 <script>
   $(document).ready(function() {
-    Let procuraParametro = new URLSearchParams(window.location.search);
+    let procuraParametro = new URLSearchParams(window.location.search);
     if (procuraParametro.has('id') &&
       procuraParametro.get('id') != '') {
     carregaDados(procuraParametro.get('id'));
@@ -123,7 +123,7 @@ include_once('layout/sidebar.php');
     var preco = $('#preco').val();
     var categoria_id = $('#categoria_id').val();
 
-    if (codigo == '' || nome '' || preco '') {
+    if (codigo == '' || nome == '' || preco == '') {
       alert('Código, nome e preço são obrigatórios!!');
       $('#codigo').focus();
       return false;
