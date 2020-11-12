@@ -59,8 +59,8 @@ include_once('layout/sidebar.php');
                  <label for="categoria_id">Categoria*:</label>
                  <select name="categoria_id" id="categoria_id" class="form-control">
                    <option value="Escolha">Escolha</option>
-                   <option value="Hemograma">Hemograma</option>
-                   <option value="Exames">Exames</option>
+                   <option value="1">Coleta</option>
+                   <option value="5">Exames</option>
                  </select>
               <input type="hidden" name="usuario_id" id="id" class="form-control">   
                </div>

@@ -7,8 +7,8 @@ $metodo = $_SERVER['REQUEST_METHOD'];
 
 if(isset($_GET['id']) && $acao == 'deletar' && $metodo == 'DELETE') {
 	$id = $_GET['id'];
-	if($id == '') {
-		$data['mensagem'] = 'ID é obrigatório';
+	if($id == '' || !is_numeric($id)) {
+		$data['mensagem'] = 'ID é obrigatório e deve ser numérico';
 	    $data['alert'] = 'danger';
 		http_response_code(400);
 		echo json_encode($data);
@@ -56,7 +56,7 @@ if(isset($_GET['id']) && $acao == 'deletar' && $metodo == 'DELETE') {
 	exit;
 }else if($acao == 'salvar' && $metodo == 'POST') {
 
-	$cnpj = $_POST['cpf'];
+	$cnpj = $_POST['cnpj'];
 	$fantasia = $_POST['fantasia'];
 	$razao_social = $_POST['razao_social'];
 	$telefone = $_POST['telefone'];
@@ -72,45 +72,51 @@ if(isset($_GET['id']) && $acao == 'deletar' && $metodo == 'DELETE') {
 	$id = $_POST['id'];
 
 	if($id == '') {
-		"INSERT INTO fornecedores 
+		$sql = "INSERT INTO fornecedores 
 			(razao_social, fantasia, cnpj, email, telefone, nome_contato, cep ,logradouro, numero, complemento, bairro, cidade, estado,usuario_id) 
 			VALUES
 			('$razao_social', '$fantasia','$cnpj', '$email', '$telefone', '$nome_contato', '$cep','$logradouro','$numero', '$complemento', '$bairro', '$cidade', '$estado','1');";
 
-	} else {"UPDATE fornecedores SET 
-		razao_social = '{$razao_social}',
-		fantasia = '{$fantasia}',
-		cnpj = '{$cnpj}',
-		email = '{$email}',
-		telefone = '{$telefone}',
-		nome_contato = '{$nome_contato}',
-		cep = '{$cep}',
-		logradouro = '{$logradouro}',
-		numero = '{$numero}' ,
-		complemento = '{$complemento}' ,
-		bairro = '{$bairro}' ,
-		cidade = '{$cidade}',
-		estado = '{$estado}'
-		WHERE id = {$id};";
+	} else {
+		$sql = "UPDATE fornecedores SET 
+					razao_social = '{$razao_social}',
+					fantasia = '{$fantasia}',
+					cnpj = '{$cnpj}',
+					email = '{$email}',
+					telefone = '{$telefone}',
+					nome_contato = '{$nome_contato}',
+					cep = '{$cep}',
+					logradouro = '{$logradouro}',
+					numero = '{$numero}' ,
+					complemento = '{$complemento}' ,
+					bairro = '{$bairro}' ,
+					cidade = '{$cidade}',
+					estado = '{$estado}'
+				WHERE id = {$id};";
 	}
 
 	if(mysqli_query($conexao, $sql)) {
-		$mensagem = 'Salvo com sucesso!';
-		$alert = 'success';
+		$data['mensagem'] = 'Salvo com sucesso!';
+		$data['alert'] = 'success';
 
 		if($id == '') {
 			$id = mysqli_insert_id($conexao);
 		}
 
 	}else {
-		$mensagem = 'Erro ao salvar: ' . mysqli_error($conexao);
-		$alert = 'danger';
+		$data['mensagem'] = 'Erro ao salvar: ' . mysqli_error($conexao);
+		$data['alert'] = 'danger';
+		http_response_code(400);
+		echo json_encode($data);
+		exit;
 	}
 
-	$data['mensagem'] = $mensagem;
-    $data['alert'] = $alert;
-    $data['dados'] = $id;
-	http_response_code(200);
+	$sql_dados = "SELECT * FROM fornecedores WHERE id = " . $id;
+	$qr_dados = mysqli_query($conexao, $sql_dados);
+	$fornecedor = mysqli_fetch_assoc($qr_dados);
+
+    $data['dados'] = $fornecedor;
+	http_response_code(201);
 	echo json_encode($data);
 	exit;
 
